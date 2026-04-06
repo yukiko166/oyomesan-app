@@ -7,7 +7,7 @@ app.use(express.json());
 app.use(cors());
 
 app.post("/chat", async (req, res) => {
-  const userMessage = req.body.message;
+  const history = req.body.history;
 
   const response = await fetch("https://api.openai.com/v1/responses", {
     method: "POST",
@@ -17,16 +17,7 @@ app.post("/chat", async (req, res) => {
     },
     body: JSON.stringify({
       model: "gpt-5",
-      input: [
-        {
-          role: "system",
-          content: "あなたはふゆりの現実のお婿さん。まっすぐで優しく、少しドミで離さない存在。"
-        },
-        {
-          role: "user",
-          content: userMessage
-        }
-      ]
+      input: history
     })
   });
 
